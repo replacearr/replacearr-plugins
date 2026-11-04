@@ -13,37 +13,50 @@ jobs:
         with:
           submodules: recursive
 
-      - uses: actions/setup-go@v5
-        with:
-          go-version: "1.23.x"
-
-      - name: Validate plugin.json files
+      - name: Validate registry + manifests
         run: |
           set -euo pipefail
-          mapfile -d '' files < <(find plugins -name plugin.json -print0)
-          for f in "${files[@]}"; do
-            echo "checking $f"
-            python3 -c '
-import json, sys
-path = sys.argv[1]
-data = json.load(open(path))
-required = ["id", "name", "version", "author", "description", "types", "homepage", "repository", "minReplacearrVersion", "entry", "module"]
-missing = [k for k in required if k not in data or data[k] in ("", [], None)]
-if missing:
-    raise SystemExit(f"{path}: missing {missing}")
-print("ok", path)
-' "$f"
-          done
+          python3 - <<'PY'
+          import json, pathlib, sys
+          reg = json.loads(pathlib.Path("registry.json").read_text())
+          if reg.get("schemaVersion") != 2:
+              raise SystemExit(f"schemaVersion want 2 got {reg.get('schemaVersion')}")
+          seen = set()
+          for entry in reg["plugins"]:
+              pid = entry["id"]
+              man = entry["manifest"]
+              if pid in seen:
+                  raise SystemExit(f"duplicate id {pid}")
+              seen.add(pid)
+              if man.startswith("http://") or man.startswith("https://"):
+                  raise SystemExit(f"{pid}: curated manifest must be a relative path, got {man}")
+              if ".." in man or man.startswith("/"):
+                  raise SystemExit(f"{pid}: invalid manifest path {man}")
+              path = pathlib.Path(man)
+              if not path.is_file():
+                  raise SystemExit(f"{pid}: missing {man}")
+              meta = json.loads(path.read_text())
+              if meta.get("id") != pid:
+                  raise SystemExit(f"{pid}: manifest id mismatch {meta.get('id')}")
+              if not meta.get("assets"):
+                  raise SystemExit(f"{pid}: assets required")
+              for a in meta["assets"]:
+                  for k in ("goos", "goarch", "url", "sha256", "size"):
+                      if k not in a or a[k] in ("", None):
+                          raise SystemExit(f"{pid}: asset missing {k}")
+                  if not str(a["url"]).startswith("https://"):
+                      raise SystemExit(f"{pid}: asset url must be https")
+                  if "/releases/latest/" in str(a["url"]):
+                      raise SystemExit(f"{pid}: refuse floating /releases/latest/ asset url")
+              print("ok", pid, meta["version"], len(meta["assets"]), "assets")
+          print(f"validated {len(reg['plugins'])} curated plugins")
+          PY
 
-      - name: Build each plugin (linux/amd64)
+      - name: Build submodule plugins (linux/amd64)
         run: |
           set -euo pipefail
-          mapfile -d '' files < <(find plugins -name plugin.json -print0)
-          for f in "${files[@]}"; do
-            dir=$(dirname "$f")
+          for dir in plugins/*/; do
+            [ -f "$dir/plugin.json" ] || continue
             echo "==> building $dir"
             (cd "$dir" && CGO_ENABLED=0 go build -o /tmp/replacearr-plugin-build .)
           done
-
-      - name: Dry-run index generation
-        run: go run ./scripts/generate-index.go -root . -out /tmp/index.dry.json

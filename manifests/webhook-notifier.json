@@ -1,0 +1,50 @@
+{
+  "id": "webhook-notifier",
+  "name": "Webhook Notifier",
+  "version": "0.1.0",
+  "author": "Replacearr",
+  "description": "POSTs Replacearr lifecycle events as JSON to a webhook URL. Use as a template for Telegram, Signal, and other channel plugins.",
+  "types": [
+    "notification"
+  ],
+  "homepage": "https://github.com/replacearr/plugin-webhook-notifier",
+  "repository": "https://github.com/replacearr/plugin-webhook-notifier",
+  "minReplacearrVersion": "0.1.0",
+  "assets": [
+    {
+      "goos": "linux",
+      "goarch": "amd64",
+      "url": "https://github.com/replacearr/plugin-webhook-notifier/releases/download/v0.1.0/webhook-notifier_linux_amd64",
+      "sha256": "c25d0a0568817b4290459b2ff3f6244722f455ed7b1ac143dbe0fb3ab683c3ee",
+      "size": 6697120
+    },
+    {
+      "goos": "linux",
+      "goarch": "arm64",
+      "url": "https://github.com/replacearr/plugin-webhook-notifier/releases/download/v0.1.0/webhook-notifier_linux_arm64",
+      "sha256": "586bdfbd78ebd15e6df9853c6eb9feb6955778a16068374dff40519ea7b21614",
+      "size": 6160544
+    },
+    {
+      "goos": "darwin",
+      "goarch": "amd64",
+      "url": "https://github.com/replacearr/plugin-webhook-notifier/releases/download/v0.1.0/webhook-notifier_darwin_amd64",
+      "sha256": "d889cb2046e32d14888bbfdcd0f1b0677f404183984ef3772f2aa25a8bc3031a",
+      "size": 6853440
+    },
+    {
+      "goos": "darwin",
+      "goarch": "arm64",
+      "url": "https://github.com/replacearr/plugin-webhook-notifier/releases/download/v0.1.0/webhook-notifier_darwin_arm64",
+      "sha256": "989f03d20b3e35ce0855aec94b2d26b43f8b8a121d1177f924e6c3a03897bbb5",
+      "size": 6336962
+    },
+    {
+      "goos": "windows",
+      "goarch": "amd64",
+      "url": "https://github.com/replacearr/plugin-webhook-notifier/releases/download/v0.1.0/webhook-notifier_windows_amd64.exe",
+      "sha256": "18af783ce8187c8e3a3187fa05a3dc4165a172941adc3a9e8496eee2e7111007",
+      "size": 6900736
+    }
+  ]
+}

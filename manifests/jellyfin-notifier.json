@@ -1,0 +1,50 @@
+{
+  "id": "jellyfin-notifier",
+  "name": "Jellyfin Notifier",
+  "version": "0.1.1",
+  "author": "Replacearr",
+  "description": "Refreshes Jellyfin after Replacearr imports media, and turns Jellyfin Webhook ItemAdded callbacks into jellyfin.picked_up events.",
+  "types": [
+    "notification"
+  ],
+  "homepage": "https://github.com/replacearr/plugin-jellyfin-notifier",
+  "repository": "https://github.com/replacearr/plugin-jellyfin-notifier",
+  "minReplacearrVersion": "0.1.0",
+  "assets": [
+    {
+      "goos": "linux",
+      "goarch": "amd64",
+      "url": "https://github.com/replacearr/plugin-jellyfin-notifier/releases/download/v0.1.1/jellyfin-notifier_linux_amd64",
+      "sha256": "17f3827e32a0e45d73d8056996233d2cb9a883fde3034bc35042a60ed61dbb1d",
+      "size": 6709408
+    },
+    {
+      "goos": "linux",
+      "goarch": "arm64",
+      "url": "https://github.com/replacearr/plugin-jellyfin-notifier/releases/download/v0.1.1/jellyfin-notifier_linux_arm64",
+      "sha256": "6065fce5c803c556ec0115ec1b59a3ac0d379d250f566b499fbcd91252cec0e4",
+      "size": 6226080
+    },
+    {
+      "goos": "darwin",
+      "goarch": "amd64",
+      "url": "https://github.com/replacearr/plugin-jellyfin-notifier/releases/download/v0.1.1/jellyfin-notifier_darwin_amd64",
+      "sha256": "e8fdbfe82c4e09ae4d3062c18b5a655fa32504dcbf4d42cb2eb9c21e89111f8d",
+      "size": 6861744
+    },
+    {
+      "goos": "darwin",
+      "goarch": "arm64",
+      "url": "https://github.com/replacearr/plugin-jellyfin-notifier/releases/download/v0.1.1/jellyfin-notifier_darwin_arm64",
+      "sha256": "e7a451e32db0faa9340ab4519349916ffdb42978b2db54c012a6f69b4c56f4f9",
+      "size": 6353602
+    },
+    {
+      "goos": "windows",
+      "goarch": "amd64",
+      "url": "https://github.com/replacearr/plugin-jellyfin-notifier/releases/download/v0.1.1/jellyfin-notifier_windows_amd64.exe",
+      "sha256": "67376014ecdd9244afc1cbc47b59938334fa9a76b1c053a6e717f0ae88915381",
+      "size": 6910976
+    }
+  ]
+}

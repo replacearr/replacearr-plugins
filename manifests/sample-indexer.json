@@ -1,0 +1,50 @@
+{
+  "id": "sample-torznab-indexer",
+  "name": "Replacearr Torznab Demo Indexer",
+  "version": "0.1.0",
+  "author": "Replacearr",
+  "description": "Reference Go indexer plugin demonstrating the zero-CGO Replacearr Plugin SDK over stdin/stdout JSON-RPC. Returns demo releases only.",
+  "types": [
+    "indexer"
+  ],
+  "homepage": "https://github.com/replacearr/plugin-sample-indexer",
+  "repository": "https://github.com/replacearr/plugin-sample-indexer",
+  "minReplacearrVersion": "0.1.0",
+  "assets": [
+    {
+      "goos": "linux",
+      "goarch": "amd64",
+      "url": "https://github.com/replacearr/plugin-sample-indexer/releases/download/v0.1.0/sample-torznab-indexer_linux_amd64",
+      "sha256": "3f9a910fe2724a34562c3fa7ad44e6cec8b324934c98042748ead392db3b12a5",
+      "size": 2642080
+    },
+    {
+      "goos": "linux",
+      "goarch": "arm64",
+      "url": "https://github.com/replacearr/plugin-sample-indexer/releases/download/v0.1.0/sample-torznab-indexer_linux_arm64",
+      "sha256": "2a801fee8a716a77267ed6ec14914aaaef1071f498c5b9334d75a1c5cd411752",
+      "size": 2556064
+    },
+    {
+      "goos": "darwin",
+      "goarch": "amd64",
+      "url": "https://github.com/replacearr/plugin-sample-indexer/releases/download/v0.1.0/sample-torznab-indexer_darwin_amd64",
+      "sha256": "c1e7c23b8947d4b4ee3aa55ba3b801056530061aa4430685b0177dc5f96cddd4",
+      "size": 2703232
+    },
+    {
+      "goos": "darwin",
+      "goarch": "arm64",
+      "url": "https://github.com/replacearr/plugin-sample-indexer/releases/download/v0.1.0/sample-torznab-indexer_darwin_arm64",
+      "sha256": "89612f6d3cbe426749ecc2674c82507620288e63829179e77a795ac81817f420",
+      "size": 2563474
+    },
+    {
+      "goos": "windows",
+      "goarch": "amd64",
+      "url": "https://github.com/replacearr/plugin-sample-indexer/releases/download/v0.1.0/sample-torznab-indexer_windows_amd64.exe",
+      "sha256": "50aea6c5c245adef6a394d17a715b5989ba567c1c6804a962ad5a1e075f47a61",
+      "size": 2813440
+    }
+  ]
+}

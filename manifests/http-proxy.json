@@ -1,0 +1,50 @@
+{
+  "id": "http-proxy",
+  "name": "HTTP / HTTPS / SOCKS Proxy",
+  "version": "0.1.0",
+  "author": "Replacearr",
+  "description": "Routes outbound indexer and metadata HTTP through a standard HTTP, HTTPS, or SOCKS5 proxy.",
+  "types": [
+    "network_proxy"
+  ],
+  "homepage": "https://github.com/replacearr/plugin-http-proxy",
+  "repository": "https://github.com/replacearr/plugin-http-proxy",
+  "minReplacearrVersion": "0.1.0",
+  "assets": [
+    {
+      "goos": "linux",
+      "goarch": "amd64",
+      "url": "https://github.com/replacearr/plugin-http-proxy/releases/download/v0.1.0/http-proxy_linux_amd64",
+      "sha256": "2f5bc04ebf37bd816071ef9f516c16441f6394583007ba8d24facd4517846fc4",
+      "size": 3190944
+    },
+    {
+      "goos": "linux",
+      "goarch": "arm64",
+      "url": "https://github.com/replacearr/plugin-http-proxy/releases/download/v0.1.0/http-proxy_linux_arm64",
+      "sha256": "19ec8c84b9baa01a7179516c41cb995004647042621cdb6747f1b2fb821e7fff",
+      "size": 3145888
+    },
+    {
+      "goos": "darwin",
+      "goarch": "amd64",
+      "url": "https://github.com/replacearr/plugin-http-proxy/releases/download/v0.1.0/http-proxy_darwin_amd64",
+      "sha256": "499fbf77f23e6b109c23ba1e1162f0f1ea54f284a90d4260089f1898e72e1d25",
+      "size": 3298464
+    },
+    {
+      "goos": "darwin",
+      "goarch": "arm64",
+      "url": "https://github.com/replacearr/plugin-http-proxy/releases/download/v0.1.0/http-proxy_darwin_arm64",
+      "sha256": "8316e1866b0d78c196913441cdf4e65b8c69a27e45f05b166893abc30e8c8764",
+      "size": 3130322
+    },
+    {
+      "goos": "windows",
+      "goarch": "amd64",
+      "url": "https://github.com/replacearr/plugin-http-proxy/releases/download/v0.1.0/http-proxy_windows_amd64.exe",
+      "sha256": "d45f2c6abe8bb7c1fb662fed3164d6ae7430a33add4f763bdb84938d7a89bb78",
+      "size": 3333120
+    }
+  ]
+}

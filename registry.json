@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 2,
+  "plugins": [
+    {
+      "id": "http-proxy",
+      "manifest": "manifests/http-proxy.json"
+    },
+    {
+      "id": "jellyfin-notifier",
+      "manifest": "manifests/jellyfin-notifier.json"
+    },
+    {
+      "id": "openvpn-proxy",
+      "manifest": "manifests/openvpn-proxy.json"
+    },
+    {
+      "id": "sample-torznab-indexer",
+      "manifest": "manifests/sample-indexer.json"
+    },
+    {
+      "id": "webhook-notifier",
+      "manifest": "manifests/webhook-notifier.json"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/replacearr/replacearr-plugins/schemas/registry.schema.json",
+  "title": "Replacearr curated plugin registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "plugins"],
+  "properties": {
+    "schemaVersion": { "type": "integer", "const": 2 },
+    "plugins": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "manifest"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]{1,63}$"
+          },
+          "manifest": {
+            "type": "string",
+            "description": "Path relative to registry.json (must stay same-origin; typically manifests/{name}.json)."
+          }
+        }
+      }
+    }
+  }
+}

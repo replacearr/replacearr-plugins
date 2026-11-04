@@ -1,0 +1,50 @@
+{
+  "id": "openvpn-proxy",
+  "name": "OpenVPN SOCKS Proxy",
+  "version": "0.1.0",
+  "author": "Replacearr",
+  "description": "Exposes a local SOCKS5 URL for outbound traffic; optionally launches OpenVPN (requires CAP_NET_ADMIN).",
+  "types": [
+    "network_proxy"
+  ],
+  "homepage": "https://github.com/replacearr/plugin-openvpn-proxy",
+  "repository": "https://github.com/replacearr/plugin-openvpn-proxy",
+  "minReplacearrVersion": "0.1.0",
+  "assets": [
+    {
+      "goos": "linux",
+      "goarch": "amd64",
+      "url": "https://github.com/replacearr/plugin-openvpn-proxy/releases/download/v0.1.0/openvpn-proxy_linux_amd64",
+      "sha256": "dd85c9e64d43ae4bde4482c486d8ead99a29403c74d0e0fc56b94d5c204b9264",
+      "size": 3371168
+    },
+    {
+      "goos": "linux",
+      "goarch": "arm64",
+      "url": "https://github.com/replacearr/plugin-openvpn-proxy/releases/download/v0.1.0/openvpn-proxy_linux_arm64",
+      "sha256": "ced33d008e7808357700ecc150b1dc46917c119e547a508c9cdc2a83a7368533",
+      "size": 3276960
+    },
+    {
+      "goos": "darwin",
+      "goarch": "amd64",
+      "url": "https://github.com/replacearr/plugin-openvpn-proxy/releases/download/v0.1.0/openvpn-proxy_darwin_amd64",
+      "sha256": "ba65f64b2fc7d3a3fc533b5f3e3da0900b4a8ea43b3c5abbf59d38047695b041",
+      "size": 3412896
+    },
+    {
+      "goos": "darwin",
+      "goarch": "arm64",
+      "url": "https://github.com/replacearr/plugin-openvpn-proxy/releases/download/v0.1.0/openvpn-proxy_darwin_arm64",
+      "sha256": "b29bda2d06dc381b8cc80cb983f8b7f36e0ae320db61f22c45a1650d9d4c88e3",
+      "size": 3233250
+    },
+    {
+      "goos": "windows",
+      "goarch": "amd64",
+      "url": "https://github.com/replacearr/plugin-openvpn-proxy/releases/download/v0.1.0/openvpn-proxy_windows_amd64.exe",
+      "sha256": "a10e2d691f43004b724da4374d5c525758c7e4b16b8f46958feb685f65cd9e5c",
+      "size": 3506176
+    }
+  ]
+}
