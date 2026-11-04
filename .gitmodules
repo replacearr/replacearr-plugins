@@ -1,15 +1,15 @@
 [submodule "plugins/http-proxy"]
 	path = plugins/http-proxy
-	url = https://github.com/replacearr/plugin-http-proxy.git
+	url = git@github.com:replacearr/plugin-http-proxy.git
 [submodule "plugins/jellyfin-notifier"]
 	path = plugins/jellyfin-notifier
-	url = https://github.com/replacearr/plugin-jellyfin-notifier.git
+	url = git@github.com:replacearr/plugin-jellyfin-notifier.git
 [submodule "plugins/openvpn-proxy"]
 	path = plugins/openvpn-proxy
-	url = https://github.com/replacearr/plugin-openvpn-proxy.git
+	url = git@github.com:replacearr/plugin-openvpn-proxy.git
 [submodule "plugins/sample-indexer"]
 	path = plugins/sample-indexer
-	url = https://github.com/replacearr/plugin-sample-indexer.git
+	url = git@github.com:replacearr/plugin-sample-indexer.git
 [submodule "plugins/webhook-notifier"]
 	path = plugins/webhook-notifier
-	url = https://github.com/replacearr/plugin-webhook-notifier.git
+	url = git@github.com:replacearr/plugin-webhook-notifier.git
