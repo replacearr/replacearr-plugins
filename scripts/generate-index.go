@@ -93,6 +93,21 @@ func main() {
 		}
 	}
 
+	// Preserve prior assets for plugins not present in this -assets map (single-plugin releases).
+	prevAssets := map[string][]asset{}
+	out := filepath.Join(*root, *outPath)
+	if filepath.IsAbs(*outPath) {
+		out = *outPath
+	}
+	if raw, err := os.ReadFile(out); err == nil {
+		var prev catalog
+		if json.Unmarshal(raw, &prev) == nil {
+			for _, p := range prev.Plugins {
+				prevAssets[p.ID] = p.Assets
+			}
+		}
+	}
+
 	cat := catalog{
 		SchemaVersion: schemaVersion,
 		UpdatedAt:     time.Now().UTC().Format(time.RFC3339),
@@ -133,6 +148,11 @@ func main() {
 				Size:   info.Size,
 			})
 		}
+		if len(entry.Assets) == 0 {
+			if prior, ok := prevAssets[meta.ID]; ok {
+				entry.Assets = append([]asset{}, prior...)
+			}
+		}
 		sort.Slice(entry.Assets, func(i, j int) bool {
 			if entry.Assets[i].GOOS != entry.Assets[j].GOOS {
 				return entry.Assets[i].GOOS < entry.Assets[j].GOOS
@@ -151,10 +171,6 @@ func main() {
 		fail(err)
 	}
 	encoded = append(encoded, '\n')
-	out := filepath.Join(*root, *outPath)
-	if filepath.IsAbs(*outPath) {
-		out = *outPath
-	}
 	if err := os.WriteFile(out, encoded, 0o644); err != nil {
 		fail(err)
 	}

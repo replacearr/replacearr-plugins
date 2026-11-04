@@ -1,9 +1,9 @@
 {
   "id": "jellyfin-notifier",
   "name": "Jellyfin Notifier",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "SiloCityLabs",
-  "description": "Refreshes Jellyfin after Replacearr imports media. Configure inbound_webhook_secret and point Jellyfin's webhook plugin at POST /api/v1/webhooks/jellyfin for jellyfin.picked_up events.",
+  "description": "Refreshes Jellyfin after Replacearr imports media, and turns Jellyfin Webhook ItemAdded callbacks into jellyfin.picked_up events.",
   "types": ["notification"],
   "homepage": "https://github.com/SiloCityLabs/replacearr-plugins/tree/main/plugins/jellyfin-notifier",
   "repository": "https://github.com/SiloCityLabs/replacearr-plugins",

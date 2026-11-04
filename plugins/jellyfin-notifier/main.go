@@ -1,5 +1,5 @@
 // Package main is a Replacearr notification plugin that refreshes a Jellyfin library
-// after imports, and stores the shared secret used by POST /api/v1/webhooks/jellyfin.
+// after imports, and handles inbound Jellyfin webhook callbacks via the host.
 //
 // Build:
 //
@@ -34,14 +34,18 @@ type JellyfinNotifier struct {
 
 func (p *JellyfinNotifier) Manifest() pluginsdk.Manifest {
 	return pluginsdk.Manifest{
-		// Must match pluginsdk.JellyfinNotifierPluginID in Replacearr core.
-		ID:                "jellyfin-notifier",
-		Name:              "Jellyfin Notifier",
-		Version:           "0.1.0",
-		Author:            "SiloCityLabs",
-		Description:       "Refreshes Jellyfin after Replacearr imports media. Configure inbound_webhook_secret and point Jellyfin's webhook plugin at POST /api/v1/webhooks/jellyfin for jellyfin.picked_up events.",
-		Types:             []pluginsdk.PluginType{pluginsdk.PluginTypeNotification},
+		ID:          "jellyfin-notifier",
+		Name:        "Jellyfin Notifier",
+		Version:     "0.1.1",
+		Author:      "SiloCityLabs",
+		Description: "Refreshes Jellyfin after Replacearr imports media, and turns Jellyfin Webhook ItemAdded callbacks into jellyfin.picked_up events.",
+		Types:       []pluginsdk.PluginType{pluginsdk.PluginTypeNotification},
 		DisabledByDefault: true,
+		InboundWebhooks: []pluginsdk.InboundWebhookSpec{{
+			SecretSetting: "inbound_webhook_secret",
+			PathAliases:   []string{"jellyfin"},
+			Description:   "Jellyfin Webhook plugin ItemAdded → POST /api/v1/webhooks/jellyfin",
+		}},
 		ConfigSchema: []pluginsdk.ConfigFieldSchema{
 			{
 				Name:     "base_url",
@@ -91,7 +95,7 @@ func (p *JellyfinNotifier) Manifest() pluginsdk.Manifest {
 				Type:     "password",
 				Default:  "",
 				Required: false,
-				HelpText: "Shared secret for POST /api/v1/webhooks/jellyfin (header X-Replacearr-Webhook-Secret or ?secret=). Point Jellyfin Webhook plugin ItemAdded here.",
+				HelpText: "Shared secret for POST /api/v1/webhooks/jellyfin (header X-Replacearr-Webhook-Secret or ?secret=).",
 			},
 		},
 	}
@@ -194,6 +198,76 @@ func (p *JellyfinNotifier) Notify(ctx context.Context, eventType string, payload
 		return err
 	}
 	return p.postRefresh(ctx, client, baseURL, apiKey, "/Library/Media/Updated", body)
+}
+
+// HandleWebhook parses Jellyfin Webhook plugin JSON and emits jellyfin.picked_up for ItemAdded.
+func (p *JellyfinNotifier) HandleWebhook(_ context.Context, req pluginsdk.WebhookRequest) (*pluginsdk.WebhookResult, error) {
+	raw := map[string]any{}
+	if len(bytes.TrimSpace(req.Body)) > 0 {
+		if err := json.Unmarshal(req.Body, &raw); err != nil {
+			return &pluginsdk.WebhookResult{Status: http.StatusBadRequest}, fmt.Errorf("invalid json: %w", err)
+		}
+	}
+	if !jellyfinWebhookIsItemAdded(raw) {
+		return &pluginsdk.WebhookResult{Status: http.StatusNoContent}, nil
+	}
+	return &pluginsdk.WebhookResult{
+		Status: http.StatusNoContent,
+		Events: []pluginsdk.WebhookEvent{{
+			EventType: pluginsdk.EventJellyfinPickedUp,
+			Payload:   normalizeJellyfinWebhookPayload(raw),
+		}},
+	}, nil
+}
+
+func jellyfinWebhookIsItemAdded(raw map[string]any) bool {
+	notifType := firstString(raw,
+		"NotificationType", "notificationType", "notification_type",
+		"Event", "event", "Type", "type",
+	)
+	if notifType == "" {
+		return true
+	}
+	n := strings.ToLower(strings.TrimSpace(notifType))
+	switch n {
+	case "itemadded", "item.added", "library.new", "library_new", "item added":
+		return true
+	}
+	if strings.Contains(n, "playback") || strings.Contains(n, "session") ||
+		strings.Contains(n, "userdatal") || strings.Contains(n, "authentication") {
+		return false
+	}
+	return false
+}
+
+func normalizeJellyfinWebhookPayload(raw map[string]any) map[string]any {
+	out := map[string]any{}
+	if title := firstString(raw, "Name", "ItemName", "title", "SeriesName"); title != "" {
+		out["title"] = title
+	}
+	if itemType := firstString(raw, "ItemType", "item_type", "itemType"); itemType != "" {
+		out["itemType"] = itemType
+	}
+	if itemID := firstString(raw, "ItemId", "Id", "itemId", "item_id"); itemID != "" {
+		out["itemId"] = itemID
+	}
+	if path := firstString(raw, "Path", "ItemPath", "path", "item_path"); path != "" {
+		out["path"] = path
+	}
+	return out
+}
+
+func firstString(raw map[string]any, keys ...string) string {
+	for _, key := range keys {
+		if v, ok := raw[key]; ok {
+			if s, ok := v.(string); ok {
+				if t := strings.TrimSpace(s); t != "" {
+					return t
+				}
+			}
+		}
+	}
+	return ""
 }
 
 func mediaPathFromPayload(payload map[string]any) string {
