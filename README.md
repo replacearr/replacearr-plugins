@@ -1,7 +1,7 @@
 # replacearr-plugins
 
 Curated marketplace registry for [Replacearr](https://github.com/replacearr/replacearr) plugins.
-Site: [replacearr.com](https://replacearr.com).
+Site: [replacearr.com](https://replacearr.com) · Discord: [discord.gg/WUrKJuE5XB](https://discord.gg/WUrKJuE5XB).
 
 Replacearr fetches:
 
