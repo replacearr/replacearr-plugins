@@ -35,7 +35,7 @@ func (p *WebhookNotifier) Manifest() pluginsdk.Manifest {
 		ID:                "webhook-notifier",
 		Name:              "Webhook Notifier",
 		Version:           "0.1.0",
-		Author:            "SiloCityLabs",
+		Author:            "Replacearr",
 		Description:       "POSTs Replacearr lifecycle events as JSON to a webhook URL. Use as a template for Telegram, Signal, and other channel plugins.",
 		Types:             []pluginsdk.PluginType{pluginsdk.PluginTypeNotification},
 		DisabledByDefault: true,

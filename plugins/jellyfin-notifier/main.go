@@ -37,7 +37,7 @@ func (p *JellyfinNotifier) Manifest() pluginsdk.Manifest {
 		ID:          "jellyfin-notifier",
 		Name:        "Jellyfin Notifier",
 		Version:     "0.1.1",
-		Author:      "SiloCityLabs",
+		Author:      "Replacearr",
 		Description: "Refreshes Jellyfin after Replacearr imports media, and turns Jellyfin Webhook ItemAdded callbacks into jellyfin.picked_up events.",
 		Types:       []pluginsdk.PluginType{pluginsdk.PluginTypeNotification},
 		DisabledByDefault: true,

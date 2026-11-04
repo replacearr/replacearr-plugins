@@ -33,7 +33,7 @@ func (p *HTTPProxyPlugin) Manifest() pluginsdk.Manifest {
 		ID:                "http-proxy",
 		Name:              "HTTP / HTTPS / SOCKS Proxy",
 		Version:           "0.1.0",
-		Author:            "SiloCityLabs",
+		Author:            "Replacearr",
 		Description:       "Routes outbound indexer and metadata HTTP through a standard HTTP, HTTPS, or SOCKS5 proxy.",
 		Types:             []pluginsdk.PluginType{pluginsdk.PluginTypeNetworkProxy},
 		DisabledByDefault: true,

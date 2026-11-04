@@ -2,12 +2,12 @@
   "id": "openvpn-proxy",
   "name": "OpenVPN SOCKS Proxy",
   "version": "0.1.0",
-  "author": "SiloCityLabs",
+  "author": "Replacearr",
   "description": "Exposes a local SOCKS5 URL for outbound traffic; optionally launches OpenVPN (requires CAP_NET_ADMIN).",
   "types": ["network_proxy"],
-  "homepage": "https://github.com/SiloCityLabs/replacearr-plugins/tree/main/plugins/openvpn-proxy",
-  "repository": "https://github.com/SiloCityLabs/replacearr-plugins",
+  "homepage": "https://github.com/replacearr/replacearr-plugins/tree/main/plugins/openvpn-proxy",
+  "repository": "https://github.com/replacearr/replacearr-plugins",
   "minReplacearrVersion": "0.1.0",
   "entry": ".",
-  "module": "github.com/silocitylabs/replacearr-plugins/plugins/openvpn-proxy"
+  "module": "github.com/replacearr/replacearr-plugins/plugins/openvpn-proxy"
 }

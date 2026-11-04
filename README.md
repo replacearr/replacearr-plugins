@@ -1,11 +1,12 @@
 # replacearr-plugins
 
-Central marketplace catalog for [Replacearr](https://github.com/SiloCityLabs/replacearr) Go plugins.
+Central marketplace catalog for [Replacearr](https://github.com/replacearr/replacearr) Go plugins.
+Site: [replacearr.com](https://replacearr.com).
 
-Replacearr does **not** vendor this repository as a git submodule. It fetches a single published index:
+Replacearr fetches a single published index (not a git submodule):
 
 ```
-https://raw.githubusercontent.com/SiloCityLabs/replacearr-plugins/main/index.json
+https://raw.githubusercontent.com/replacearr/replacearr-plugins/main/index.json
 ```
 
 Override with `REPLACEARR_PLUGIN_CATALOG_URL` if you host a fork.
@@ -42,7 +43,7 @@ Each plugin directory contains:
       "id": "webhook-notifier",
       "name": "Webhook Notifier",
       "version": "0.1.0",
-      "author": "SiloCityLabs",
+      "author": "Replacearr",
       "description": "...",
       "types": ["notification"],
       "homepage": "...",
@@ -52,7 +53,7 @@ Each plugin directory contains:
         {
           "goos": "linux",
           "goarch": "amd64",
-          "url": "https://github.com/SiloCityLabs/replacearr-plugins/releases/download/.../webhook-notifier_linux_amd64",
+          "url": "https://github.com/replacearr/replacearr-plugins/releases/download/.../webhook-notifier_linux_amd64",
           "sha256": "...",
           "size": 1234567
         }
@@ -93,10 +94,6 @@ go run ./scripts/generate-index.go -root . -out index.json
 go run ./scripts/generate-index.go -root . -assets .artifacts/checksums.json -out index.json
 ```
 
-## SDK dependency note
+## SDK dependency
 
-Plugin modules import `github.com/replacearr/replacearr/pkg/pluginsdk`. Until that path is a public vanity module, each `go.mod` uses:
-
-```
-replace github.com/replacearr/replacearr => github.com/SiloCityLabs/replacearr <pseudo-version>
-```
+Plugin modules import `github.com/replacearr/replacearr/pkg/pluginsdk` directly. No `replace` directive is required.

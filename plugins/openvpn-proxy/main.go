@@ -31,7 +31,7 @@ func (p *OpenVPNProxyPlugin) Manifest() pluginsdk.Manifest {
 		ID:          "openvpn-proxy",
 		Name:        "OpenVPN SOCKS Proxy",
 		Version:     "0.1.0",
-		Author:            "SiloCityLabs",
+		Author:            "Replacearr",
 		Description:       "Exposes a local SOCKS5 URL for outbound traffic; optionally launches OpenVPN (requires CAP_NET_ADMIN).",
 		Types:             []pluginsdk.PluginType{pluginsdk.PluginTypeNetworkProxy},
 		DisabledByDefault: true,

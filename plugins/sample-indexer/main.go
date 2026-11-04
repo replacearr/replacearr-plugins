@@ -35,7 +35,7 @@ func (p *SampleIndexerPlugin) Manifest() pluginsdk.Manifest {
 		ID:          "sample-torznab-indexer",
 		Name:        "Replacearr Torznab Demo Indexer",
 		Version:     "0.1.0",
-		Author:      "SiloCityLabs",
+		Author:      "Replacearr",
 		Description: "Reference Go indexer plugin demonstrating the zero-CGO Replacearr Plugin SDK over stdin/stdout JSON-RPC.",
 		Types: []pluginsdk.PluginType{
 			pluginsdk.PluginTypeIndexer,
