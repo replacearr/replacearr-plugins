@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-04T03:43:02Z",
+  "updatedAt": "2026-11-04T03:44:47Z",
   "plugins": [
     {
       "id": "http-proxy",
@@ -68,37 +68,37 @@
         {
           "goos": "darwin",
           "goarch": "amd64",
-          "url": "https://github.com/SiloCityLabs/replacearr-plugins/releases/download/v0.1.0/jellyfin-notifier_darwin_amd64",
-          "sha256": "524297fca27e00867a4c2f171e09ef025b780e78a3697a2b64008b3f12be87f0",
-          "size": 6840432
+          "url": "https://github.com/SiloCityLabs/replacearr-plugins/releases/download/jellyfin-notifier-v0.1.1/jellyfin-notifier_darwin_amd64",
+          "sha256": "4b834b9182622b35d846724eab639f54d3992821f78230c8040790704969c3db",
+          "size": 6848976
         },
         {
           "goos": "darwin",
           "goarch": "arm64",
-          "url": "https://github.com/SiloCityLabs/replacearr-plugins/releases/download/v0.1.0/jellyfin-notifier_darwin_arm64",
-          "sha256": "0514e5566dddf7506ad9353aebcd7aef32c20938229cdd3a58a14dcf0dc313fc",
-          "size": 6336210
+          "url": "https://github.com/SiloCityLabs/replacearr-plugins/releases/download/jellyfin-notifier-v0.1.1/jellyfin-notifier_darwin_arm64",
+          "sha256": "05e21b3a2d3ad4c9a0d6333fbb3625abb08805e46d48227ba908c1956d33e97c",
+          "size": 6336562
         },
         {
           "goos": "linux",
           "goarch": "amd64",
-          "url": "https://github.com/SiloCityLabs/replacearr-plugins/releases/download/v0.1.0/jellyfin-notifier_linux_amd64",
-          "sha256": "05654ffd22f1755beb04790a9b882c40221b53408ad7e5547ebe9f3d552b6a18",
-          "size": 6684832
+          "url": "https://github.com/SiloCityLabs/replacearr-plugins/releases/download/jellyfin-notifier-v0.1.1/jellyfin-notifier_linux_amd64",
+          "sha256": "786701de6ec09599db00dab1704923714586a540c7321d17fece1ac3cd251c98",
+          "size": 6693024
         },
         {
           "goos": "linux",
           "goarch": "arm64",
-          "url": "https://github.com/SiloCityLabs/replacearr-plugins/releases/download/v0.1.0/jellyfin-notifier_linux_arm64",
-          "sha256": "4c68fc4a540a898478c8ce5860bb3c63937e587926558534f99e48e12709ae79",
+          "url": "https://github.com/SiloCityLabs/replacearr-plugins/releases/download/jellyfin-notifier-v0.1.1/jellyfin-notifier_linux_arm64",
+          "sha256": "58bad0a931aa16c50ddfd61581012fd1b3b467f24b0ec77e612708a61daf265d",
           "size": 6160544
         },
         {
           "goos": "windows",
           "goarch": "amd64",
-          "url": "https://github.com/SiloCityLabs/replacearr-plugins/releases/download/v0.1.0/jellyfin-notifier_windows_amd64.exe",
-          "sha256": "3aaa10f1efcc44c61c55ed52c63a47f2c78a639f886bab2a7ba4c228b1d74f50",
-          "size": 6885376
+          "url": "https://github.com/SiloCityLabs/replacearr-plugins/releases/download/jellyfin-notifier-v0.1.1/jellyfin-notifier_windows_amd64.exe",
+          "sha256": "37902c60381ba8798b116f3a0f23c6c037b1248e19aa49b3bd367528c5947c2c",
+          "size": 6893568
         }
       ]
     },
