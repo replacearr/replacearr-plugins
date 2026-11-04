@@ -1,0 +1,13 @@
+{
+  "id": "http-proxy",
+  "name": "HTTP / HTTPS / SOCKS Proxy",
+  "version": "0.1.0",
+  "author": "SiloCityLabs",
+  "description": "Routes outbound indexer and metadata HTTP through a standard HTTP, HTTPS, or SOCKS5 proxy.",
+  "types": ["network_proxy"],
+  "homepage": "https://github.com/SiloCityLabs/replacearr-plugins/tree/main/plugins/http-proxy",
+  "repository": "https://github.com/SiloCityLabs/replacearr-plugins",
+  "minReplacearrVersion": "0.1.0",
+  "entry": ".",
+  "module": "github.com/silocitylabs/replacearr-plugins/plugins/http-proxy"
+}

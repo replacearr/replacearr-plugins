@@ -1,0 +1,121 @@
+name: Release plugins
+
+on:
+  push:
+    tags:
+      - "v*"
+      - "*-v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.23.x"
+
+      - name: Resolve plugin set
+        id: select
+        run: |
+          set -euo pipefail
+          TAG="${GITHUB_REF_NAME}"
+          mkdir -p .artifacts
+          if [[ "$TAG" =~ ^(.+)-v([0-9].*)$ ]]; then
+            WANT_ID="${BASH_REMATCH[1]}"
+            echo "Single-plugin tag for id=${WANT_ID}"
+            while IFS= read -r -d '' f; do
+              id=$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["id"])' "$f")
+              if [[ "$id" == "$WANT_ID" ]]; then
+                echo "$f" >> .artifacts/plugin_files.txt
+              fi
+            done < <(find plugins -name plugin.json -print0)
+          else
+            echo "Monorepo tag ${TAG}: building all plugins"
+            find plugins -name plugin.json > .artifacts/plugin_files.txt
+          fi
+          if [[ ! -s .artifacts/plugin_files.txt ]]; then
+            echo "No plugins selected for tag ${TAG}"
+            exit 1
+          fi
+          cat .artifacts/plugin_files.txt
+
+      - name: Cross-build and checksum
+        run: |
+          set -euo pipefail
+          PLATFORMS="linux/amd64 linux/arm64 darwin/amd64 darwin/arm64 windows/amd64"
+          python3 - <<'PY'
+          import hashlib, json, os, pathlib, subprocess
+
+          platforms = ["linux/amd64", "linux/arm64", "darwin/amd64", "darwin/arm64", "windows/amd64"]
+          repo = os.environ["GITHUB_REPOSITORY"]
+          tag = os.environ["GITHUB_REF_NAME"]
+          assets = {}
+          files = pathlib.Path(".artifacts/plugin_files.txt").read_text().splitlines()
+          out_dir = pathlib.Path(".artifacts/bin")
+          out_dir.mkdir(parents=True, exist_ok=True)
+
+          for plugin_file in files:
+              meta = json.loads(pathlib.Path(plugin_file).read_text())
+              plugin_id = meta["id"]
+              plugin_dir = str(pathlib.Path(plugin_file).parent)
+              version = meta["version"]
+              for plat in platforms:
+                  goos, goarch = plat.split("/")
+                  name = f"{plugin_id}_{goos}_{goarch}"
+                  if goos == "windows":
+                      name += ".exe"
+                  dest = out_dir / name
+                  env = os.environ.copy()
+                  env["CGO_ENABLED"] = "0"
+                  env["GOOS"] = goos
+                  env["GOARCH"] = goarch
+                  subprocess.check_call(
+                      ["go", "build", "-trimpath", "-ldflags=-s -w", "-o", str(dest), "."],
+                      cwd=plugin_dir,
+                      env=env,
+                  )
+                  data = dest.read_bytes()
+                  digest = hashlib.sha256(data).hexdigest()
+                  url = f"https://github.com/{repo}/releases/download/{tag}/{dest.name}"
+                  key = f"{plugin_id}/{goos}_{goarch}"
+                  assets[key] = {
+                      "url": url,
+                      "sha256": digest,
+                      "size": len(data),
+                      "goos": goos,
+                      "goarch": goarch,
+                  }
+                  print(f"built {key} sha256={digest}")
+
+          pathlib.Path(".artifacts/checksums.json").write_text(json.dumps(assets, indent=2) + "\n")
+          PY
+
+      - name: Generate index.json
+        run: go run ./scripts/generate-index.go -root . -assets .artifacts/checksums.json -out index.json
+
+      - name: Commit updated index.json
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.json
+          if git diff --cached --quiet; then
+            echo "index.json unchanged"
+          else
+            git commit -m "chore: regenerate index.json for ${GITHUB_REF_NAME}"
+            git push origin HEAD:main
+          fi
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: .artifacts/bin/*
+          generate_release_notes: true

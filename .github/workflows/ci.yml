@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.23.x"
+
+      - name: Validate plugin.json files
+        run: |
+          set -euo pipefail
+          mapfile -d '' files < <(find plugins -name plugin.json -print0)
+          for f in "${files[@]}"; do
+            echo "checking $f"
+            python3 -c '
+import json, sys
+path = sys.argv[1]
+data = json.load(open(path))
+required = ["id", "name", "version", "author", "description", "types", "homepage", "repository", "minReplacearrVersion", "entry", "module"]
+missing = [k for k in required if k not in data or data[k] in ("", [], None)]
+if missing:
+    raise SystemExit(f"{path}: missing {missing}")
+print("ok", path)
+' "$f"
+          done
+
+      - name: Build each plugin (linux/amd64)
+        run: |
+          set -euo pipefail
+          mapfile -d '' files < <(find plugins -name plugin.json -print0)
+          for f in "${files[@]}"; do
+            dir=$(dirname "$f")
+            echo "==> building $dir"
+            (cd "$dir" && CGO_ENABLED=0 go build -o /tmp/replacearr-plugin-build .)
+          done
+
+      - name: Dry-run index generation
+        run: go run ./scripts/generate-index.go -root . -out /tmp/index.dry.json

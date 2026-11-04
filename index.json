@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-11-04T03:22:22Z",
+  "plugins": [
+    {
+      "id": "http-proxy",
+      "name": "HTTP / HTTPS / SOCKS Proxy",
+      "version": "0.1.0",
+      "author": "SiloCityLabs",
+      "description": "Routes outbound indexer and metadata HTTP through a standard HTTP, HTTPS, or SOCKS5 proxy.",
+      "types": [
+        "network_proxy"
+      ],
+      "homepage": "https://github.com/SiloCityLabs/replacearr-plugins/tree/main/plugins/http-proxy",
+      "repository": "https://github.com/SiloCityLabs/replacearr-plugins",
+      "minReplacearrVersion": "0.1.0",
+      "assets": []
+    },
+    {
+      "id": "jellyfin-notifier",
+      "name": "Jellyfin Notifier",
+      "version": "0.1.0",
+      "author": "SiloCityLabs",
+      "description": "Refreshes Jellyfin after Replacearr imports media. Configure inbound_webhook_secret and point Jellyfin's webhook plugin at POST /api/v1/webhooks/jellyfin for jellyfin.picked_up events.",
+      "types": [
+        "notification"
+      ],
+      "homepage": "https://github.com/SiloCityLabs/replacearr-plugins/tree/main/plugins/jellyfin-notifier",
+      "repository": "https://github.com/SiloCityLabs/replacearr-plugins",
+      "minReplacearrVersion": "0.1.0",
+      "assets": []
+    },
+    {
+      "id": "openvpn-proxy",
+      "name": "OpenVPN SOCKS Proxy",
+      "version": "0.1.0",
+      "author": "SiloCityLabs",
+      "description": "Exposes a local SOCKS5 URL for outbound traffic; optionally launches OpenVPN (requires CAP_NET_ADMIN).",
+      "types": [
+        "network_proxy"
+      ],
+      "homepage": "https://github.com/SiloCityLabs/replacearr-plugins/tree/main/plugins/openvpn-proxy",
+      "repository": "https://github.com/SiloCityLabs/replacearr-plugins",
+      "minReplacearrVersion": "0.1.0",
+      "assets": []
+    },
+    {
+      "id": "sample-torznab-indexer",
+      "name": "Replacearr Torznab Demo Indexer",
+      "version": "0.1.0",
+      "author": "SiloCityLabs",
+      "description": "Reference Go indexer plugin demonstrating the zero-CGO Replacearr Plugin SDK over stdin/stdout JSON-RPC. Returns demo releases only.",
+      "types": [
+        "indexer"
+      ],
+      "homepage": "https://github.com/SiloCityLabs/replacearr-plugins/tree/main/plugins/sample-indexer",
+      "repository": "https://github.com/SiloCityLabs/replacearr-plugins",
+      "minReplacearrVersion": "0.1.0",
+      "assets": []
+    },
+    {
+      "id": "webhook-notifier",
+      "name": "Webhook Notifier",
+      "version": "0.1.0",
+      "author": "SiloCityLabs",
+      "description": "POSTs Replacearr lifecycle events as JSON to a webhook URL. Use as a template for Telegram, Signal, and other channel plugins.",
+      "types": [
+        "notification"
+      ],
+      "homepage": "https://github.com/SiloCityLabs/replacearr-plugins/tree/main/plugins/webhook-notifier",
+      "repository": "https://github.com/SiloCityLabs/replacearr-plugins",
+      "minReplacearrVersion": "0.1.0",
+      "assets": []
+    }
+  ]
+}
