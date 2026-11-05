@@ -1,0 +1,46 @@
+---
+description: Safe validation, supply-chain integrity, and change discipline for the Replacearr plugin marketplace
+globs: "registry.json,manifests/**/*.json,schemas/**/*.json,.gitmodules,.github/workflows/**/*.yml,.github/workflows/**/*.yaml"
+alwaysApply: false
+---
+
+# Plugin marketplace quality and integrity
+
+Treat catalog data as a software supply-chain boundary, not incidental configuration. Prefer narrow, reviewable changes that preserve existing installations.
+
+## Validate before modifying
+
+- Read the repository README, relevant schemas, current CI workflow, and related manifest/registry entries.
+- Record the working-tree and submodule state; do not overwrite uncommitted changes.
+- Establish which checks already pass before editing. Distinguish pre-existing failures from regressions.
+- Avoid new dependencies or bespoke tooling if existing checks can cover the requirement.
+
+## Registry and manifest invariants
+
+- Require unique, stable IDs and valid relative manifest paths confined to the repository; reject absolute paths, traversal, and remote manifest URLs for curated entries.
+- Match registry IDs to manifest IDs and enforce the schema currently expected by the host.
+- Verify required release metadata and platform triples (`goos`, `goarch`), with no duplicate or conflicting asset mappings.
+- Require HTTPS, immutable version-specific release asset URLs; reject `releases/latest` and other floating targets.
+- Treat asset SHA256 and size as assertions about **exact released bytes**. Never invent, copy blindly, or recompute them from source builds. Only update them when the intended release artifact has been independently retrieved and verified.
+- Never silently change published IDs, versions, asset URLs, checksums, supported platforms, or minimum host versions.
+- Fail closed on malformed or ambiguous catalog data; diagnostics should identify the file and field without leaking secrets.
+
+## Submodule and release integrity
+
+- Keep submodules pinned; do not auto-update branches, tags, commits, or release versions.
+- Understand that a submodule SHA and a released binary are different artifacts. A successful build of checked-out source does not validate the downloaded binary checksum.
+- Do not execute downloaded binaries or modify plugin source as an incidental validation step.
+- Flag provenance, checksum, or host-compatibility uncertainty instead of treating it as confirmed compliant.
+
+## CI and change safety
+
+- Preserve existing registry validation and `CGO_ENABLED=0` build coverage. Extend checks incrementally when there is a demonstrated gap.
+- Prefer schema checks, JSON parsing, and deterministic validation that work without secrets or live third-party services.
+- Never weaken tests, skip failed checks, or fabricate results to make CI green.
+- For a change to catalog metadata, run the relevant validation; for a change to CI, review its permissions, triggers, and effect on publication.
+- Do not create tags, push commits, publish releases, update the live registry, or deploy as part of routine cleanup.
+- If a fix risks existing installs or changes a consumer contract, document the precise risk and request explicit approval rather than applying it automatically.
+
+## Output expectations
+
+When auditing or editing, state what was verified, what remains unverified, any existing failures, the files changed, and potential host/plugin compatibility effects. Avoid broad refactors and cosmetic churn.

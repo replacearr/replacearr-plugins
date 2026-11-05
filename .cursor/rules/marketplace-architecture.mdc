@@ -1,0 +1,23 @@
+---
+description: Replacearr curated plugin marketplace structure and publication contracts
+alwaysApply: true
+---
+
+# Replacearr plugin marketplace architecture
+
+This repository (`replacearr/replacearr-plugins`) is the curated **catalog** for Replacearr plugins. It is not the Replacearr host or the canonical source of individual plugin projects.
+
+- `registry.json` is the public catalog entrypoint. Preserve `schemaVersion: 2`; entries map a stable plugin `id` to a **relative** `manifests/<name>.json` path.
+- `manifests/*.json` contain pinned installation metadata, including platform-specific release assets and their SHA256 digests. Keep the manifest ID consistent with the registry ID.
+- `schemas/` defines marketplace metadata formats. Validate data against the existing schemas and consumers before changing fields or requiredness.
+- `plugins/<name>` entries are Git submodules referencing separately maintained `replacearr/plugin-*` repositories. They pin reviewed source for inspection; they are **not** the install/download path. Never assume a raw GitHub URL under this catalog serves submodule files.
+- `.gitmodules` defines the submodule mappings. `plugins/community/`, if used, is not automatically a curated registry entry.
+- Install assets come from explicit versioned GitHub release URLs identified in manifests. Do not use floating `releases/latest` links.
+- To publish or update a curated plugin, the intended sequence is: release in its own repository; deliberately advance the corresponding submodule; copy its released `plugin.json` to `manifests/`; and create/update the registry entry through review.
+- Keep the existing documented trust distinction: curated catalog entries are reviewed and pinned; user-provided GitHub URLs are separate, explicitly opt-in installs.
+- The main host can override the catalog URL via `REPLACEARR_PLUGIN_CATALOG_URL`. Avoid changes that silently alter the host's catalog discovery or installation behavior.
+- `.github/workflows/ci.yml` is the repository's current CI validation entrypoint. Preserve working validation and plugin-build steps when editing workflows.
+
+## Compatibility boundary
+
+Do not assume a plugin manifest is compatible merely because it parses. When changing a contract, compare the actual consumer in the main `replacearr` repository (`internal/plugincatalog`, `internal/pluginhost`, `pkg/pluginsdk`) if available. If it is unavailable, report compatibility as unverified rather than guessing. Never modify main-host code as part of an unrelated catalog change.
