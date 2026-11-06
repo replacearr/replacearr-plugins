@@ -38,6 +38,10 @@ schemas/
 
 Paste the GitHub repo URL in **Plugins → Marketplace**. To appear in the curated list, open a PR adding a reviewed `manifests/` entry (+ optional submodule).
 
+## License
+
+MIT
+
 ## Plugin contract
 
 Each `replacearr/plugin-{name}` repo tags `v*`, uploads platform binaries and a release `plugin.json` with:
